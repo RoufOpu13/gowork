@@ -10,12 +10,43 @@
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
+              <!-- Navigation Links Admin-->
+                @if(Auth::user()->roles == "Admin")
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                        {{ __('User Management') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                        {{ __('Naon we') }}
+                    </x-nav-link>
+                </div>
+                @elseif(Auth::user()->roles == "Pekerja")
+                <!-- Navigation Links User-->
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+                </div>
+                @elseif(Auth::user()->roles == "Perekrut")
+                <!-- Navigation Links User-->
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                        {{ __('User Management') }}
+                    </x-nav-link>
+                </div>
+                @endif
             </div>
 
             <!-- Settings Dropdown -->

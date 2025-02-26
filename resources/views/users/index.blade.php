@@ -23,18 +23,21 @@
                         </div>
                     </div>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                            <thead class="text-sm text-gray-700 uppercase bg-white dark:bg-gray-800 ">
+                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border border-gray-300 dark:border-gray-700">
+                            <thead class="bg-gray-100 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700">
                                 <tr
-                                    class="bg-white border-t border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <th scope="col" class="px-6 py-3 text-center">
+                                    class="bg-white text-gray-500 hover:text-black text-center border-t border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <th scope="col" class="px-4 py-2 border border-gray-300 dark:border-gray-700">
                                         <span>NO</span>
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-center">
+                                    <th scope="col" class="px-4 py-2 border border-gray-300 dark:border-gray-700">
                                         <span>Name</span>
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-center">
+                                    <th scope="col" class="px-4 py-2 border border-gray-300 dark:border-gray-700">
                                         <span>Email</span>
+                                    </th>
+                                    <th scope="col" class="px-4 py-2 border border-gray-300 dark:border-gray-700">
+                                        <span>Role</span>
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-center">
                                         <span>Action</span>
@@ -44,18 +47,21 @@
                             <tbody>
                                 @forelse($users as $user)
                                     <tr
-                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    class="bg-white dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700 text-black ">
                                         <td scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
+                                        class="px-4 py-2 border  border-gray-300 dark:border-gray-700 text-black text-center">
                                             {{ ++$i }}
                                         </td>
-                                        <td class="px-6 py-2 text-center">
+                                        <td class="px-4 py-2 border border-gray-300 dark:border-gray-700 text-black text-left">
                                             {{ $user->name }}
                                         </td>
-                                        <td class="px-6 py-2 text-center">
+                                        <td class="px-4 py-2 border border-gray-300 dark:border-gray-700 text-black text-left">
                                             {{ $user->email }}
                                         </td>
-                                        <td class="px-6 py-2 text-center">
+                                        <td class="px-4 py-2 border border-gray-300 text-black text-center dark:border-gray-700">
+                                            {{ $user->roles }}
+                                        </td>
+                                        <td class="px-4 py-2 border border-gray-300 text-black text-center dark:border-gray-700">
                                             <form onsubmit="return confirm('Apakah Anda Yakin ?');"
                                                 action="{{ route('users.destroy', $user->id) }}" method="POST">
                                                 <a href="{{ route('users.edit', $user->id) }}"
