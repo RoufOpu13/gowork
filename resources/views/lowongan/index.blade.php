@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('User Management') }}
+            {{ __('Lowongan Management') }}
         </h2>
     </x-slot>
     <div class="py-12">
@@ -10,14 +10,14 @@
                 <div class="mx-auto py-4 px-4 sm:px-6 lg:px-8 text-gray-900 dark:text-gray-100">
                     <div class="flex items-center justify-between py-5 mb-5">
                         <div class="md:mt-0 sm:flex-none w-72">
-                            <form action="{{ route('users.index') }}" method="GET">
+                            <form action="{{ route('lowongan.index') }}" method="GET">
                                 <input type="text" name="search" placeholder="Type for search then enter"
                                     class="w-full relative inline-flex items-center px-4 py-2 font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300" />
                             </form>
                         </div>
                         @if(Auth::user()->roles == "Admin" )
                         <div class="sm:ml-16 sm:mt-0 sm:flex-none">
-                            <a type="button" href="{{ route('users.create') }}"
+                            <a type="button" href="{{ route('lowongan.create') }}"
                                 class="relative inline-flex items-center px-4 py-2 font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300">
                                 Add New
                             </a>
@@ -33,14 +33,14 @@
                                         <span>NO</span>
                                     </th>
                                     <th scope="col" class="px-4 py-2 border border-gray-300 dark:border-gray-700">
-                                        <span>Name</span>
+                                        <span>Judul</span>
                                     </th>
                                     <th scope="col" class="px-4 py-2 border border-gray-300 dark:border-gray-700">
-                                        <span>Email</span>
+                                        <span>Deskripsi</span>
                                     </th>
                                     
                                     <th scope="col" class="px-4 py-2 border border-gray-300 dark:border-gray-700">
-                                        <span>Role</span>
+                                        <span>Kategori</span>
                                     </th>
                                     
                                     @if(Auth::user()->roles == "Admin" )
@@ -55,7 +55,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($users as $user)
+                                @forelse($lowongan as $data)
                                     <tr
                                     class="bg-white dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700 text-black ">
                                         <td scope="row"
@@ -63,20 +63,20 @@
                                             {{ ++$i }}
                                         </td>
                                         <td class="px-4 py-2 border border-gray-300 dark:border-gray-700 text-black text-left">
-                                            {{ $user->name }}
+                                            {{ $data->judul }}
                                         </td>
                                         <td class="px-4 py-2 border border-gray-300 dark:border-gray-700 text-black text-left">
-                                            {{ $user->email }}
+                                            {{ $data->deskripsi }}
                                         </td>
                                         <td class="px-4 py-2 border border-gray-300 text-black text-center dark:border-gray-700">
-                                            {{ $user->roles }}
+                                            {{ $data->kategori }}
                                         </td>
                                         @if(Auth::user()->roles == "Admin")
                                         <td class="px-4 py-2 border border-gray-300 text-black text-center dark:border-gray-700">
                                            
                                             <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('users.destroy', $user->id) }}" method="POST">
-                                                <a href="{{ route('users.edit', $user->id) }}"
+                                                action="{{ route('lowongan.destroy', $data->id) }}" method="POST">
+                                                <a href="{{ route('lowongan.edit', $data->id) }}"
                                                     class="focus:outline-none text-gray-50 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-xs px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900">EDIT</a>
                                                 @csrf
                                                 @method('DELETE')
@@ -89,8 +89,8 @@
                                         @elseif(Auth::user()->roles == "Perekrut")
                                         <td class="px-4 py-2 border border-gray-300 text-black text-center dark:border-gray-700">
                                             <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                            action="{{ route('users.destroy', $user->id) }}" method="POST">
-                                            <a href="{{ route('users.edit', $user->id) }}"
+                                            action="{{ route('lowongan.destroy', $data->id) }}" method="POST">
+                                            <a href="{{ route('lowongan.edit', $data->id) }}"
                                                 class="focus:outline-none text-gray-50 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-xs px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900">EDIT</a>
                                             </form>
                                         </td>
@@ -104,7 +104,7 @@
                             </tbody>
                         </table>
                         <div class="relative p-3">
-                        {{ $users->links() }}
+                        {{ $lowongan->links() }}
                         </div>
                     </div>
                 </div>

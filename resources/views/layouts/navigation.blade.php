@@ -19,12 +19,7 @@
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
-                        {{ __('User Management') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
-                        {{ __('Naon we') }}
+                        {{ __('User') }}
                     </x-nav-link>
                 </div>
                 @elseif(Auth::user()->roles == "Pekerja")
@@ -47,6 +42,31 @@
                     </x-nav-link>
                 </div>
                 @endif
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('lowongan.index')" :active="request()->routeIs('lowongan.index')">
+                        {{ __('Lowongan') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('pendaftaran.index')" :active="request()->routeIs('pendaftaran.index')">
+                        {{ __('Pendaftaran') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('manajemen.index')" :active="request()->routeIs('manajemen.index')">
+                        {{ __('Manajemen') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('laporan.index')" :active="request()->routeIs('laporan.index')">
+                        {{ __('Laporan') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('ulasan.index')" :active="request()->routeIs('ulasan.index')">
+                        {{ __('Ulasan') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
