@@ -28,6 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('manajemen', ManajemenController::class); //user.create //user.update
     Route::resource('laporan', LaporanController::class); //user.create //user.update
     Route::resource('ulasan', UlasanController::class); //user.create //user.update
+    Route::put('/pendaftaran/{id}/terima', [PendaftaranController::class, 'terima'])->name('pendaftaran.terima');
+    Route::put('/pendaftaran/{id}/tolak', [PendaftaranController::class, 'tolak'])->name('pendaftaran.tolak');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

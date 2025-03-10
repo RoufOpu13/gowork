@@ -9,11 +9,17 @@ return new class extends Migration {
     {
         Schema::create('pendaftarans', function (Blueprint $table) {
             $table->id();
+            
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('lowongan_id')->constrained('lowongans')->onDelete('cascade');
-            $table->enum('status', ['menunggu', 'diterima', 'ditolak'])->default('menunggu');
+            
+            $table->text('pengalaman')->nullable(); // Menyimpan pengalaman kerja pekerja
+            $table->text('keahlian')->nullable(); // Menyimpan keterampilan pekerja
+        
+            $table->enum('status', ['Menunggu', 'Diterima', 'Ditolak'])->default('Menunggu');
             $table->timestamps();
         });
+        
     }
 
     public function down()

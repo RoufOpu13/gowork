@@ -12,7 +12,11 @@ class Pendaftaran extends Model
     protected $table = 'pendaftarans';
 
     protected $fillable = [
-        'user_id', 'lowongan_id', 'status'
+        'user_id',
+        'lowongan_id',
+        'pengalaman',
+        'keahlian',
+        'status',
     ];
 
     public function user()

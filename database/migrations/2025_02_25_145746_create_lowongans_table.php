@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('kategori');
             $table->string('lokasi');
             $table->decimal('gaji', 10, 2);
-            $table->enum('status', ['aktif', 'ditutup'])->default('aktif');
+            $table->enum('status', ['Aktif', 'Ditutup'])->default('Aktif');
             $table->timestamps();
         });
     }

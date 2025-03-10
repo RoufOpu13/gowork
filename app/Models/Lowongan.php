@@ -12,11 +12,28 @@ class Lowongan extends Model
     protected $table = 'lowongans';
 
     protected $fillable = [
-        'user_id', 'judul', 'deskripsi', 'kategori', 'lokasi', 'gaji', 'status'
+        'user_id',
+        'judul',
+        'deskripsi',
+        'kategori',
+        'lokasi',
+        'gaji',
+        'status',
     ];
 
+    /**
+     * Relasi ke tabel users (Pemberi kerja)
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Relasi ke tabel pendaftarans
+     */
+    public function pendaftarans()
+    {
+        return $this->hasMany(Pendaftaran::class);
     }
 }

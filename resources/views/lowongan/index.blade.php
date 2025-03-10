@@ -1,114 +1,98 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Lowongan Management') }}
+            Lowongan Pekerjaan
         </h2>
     </x-slot>
+
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-sm">
-                <div class="mx-auto py-4 px-4 sm:px-6 lg:px-8 text-gray-900 dark:text-gray-100">
-                    <div class="flex items-center justify-between py-5 mb-5">
-                        <div class="md:mt-0 sm:flex-none w-72">
-                            <form action="{{ route('lowongan.index') }}" method="GET">
-                                <input type="text" name="search" placeholder="Type for search then enter"
-                                    class="w-full relative inline-flex items-center px-4 py-2 font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300" />
-                            </form>
-                        </div>
-                        @if(Auth::user()->roles == "Admin" )
-                        <div class="sm:ml-16 sm:mt-0 sm:flex-none">
-                            <a type="button" href="{{ route('lowongan.create') }}"
-                                class="relative inline-flex items-center px-4 py-2 font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300">
-                                Add New
-                            </a>
-                        </div>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            @if(Auth::user() && in_array(Auth::user()->roles, ['Admin', 'Perekrut']))
+                <a href="{{ route('lowongan.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Tambah Lowongan</a>
+
+                @if (session('success'))
+                    <div class="bg-green-500 text-white p-2 my-2">
+                        {{ session('success') }}
+                    </div>
+                @endif
+            @endif
+            
+            <table class="w-full border mt-4">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="border px-4 py-2">No</th>
+                        
+                        @if(Auth::user() && in_array(Auth::user()->roles, ['Admin','Pekerja' ]))
+                        <th class="border px-4 py-2">Perekrut</th>
+                    @endif
+                        <th class="border px-4 py-2">Judul</th>
+                        <th class="border px-4 py-2">Deskripsi</th> <!-- Menambahkan Deskripsi -->
+                        <th class="border px-4 py-2">Kategori</th> <!-- Menambahkan Kategori -->
+                        <th class="border px-4 py-2">Lokasi</th>
+                        <th class="border px-4 py-2">Gaji</th>
+                        <th class="border px-4 py-2">Status</th>
+                        @if(Auth::user() && in_array(Auth::user()->roles, ['Admin', 'Perekrut']))
+                            <th class="border px-4 py-2">Aksi</th>
                         @endif
-                    </div>
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border border-gray-300 dark:border-gray-700">
-                            <thead class="bg-gray-100 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700">
-                                <tr
-                                    class="bg-white text-gray-500 hover:text-black text-center border-t border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <th scope="col" class="px-4 py-2 border border-gray-300 dark:border-gray-700">
-                                        <span>NO</span>
-                                    </th>
-                                    <th scope="col" class="px-4 py-2 border border-gray-300 dark:border-gray-700">
-                                        <span>Judul</span>
-                                    </th>
-                                    <th scope="col" class="px-4 py-2 border border-gray-300 dark:border-gray-700">
-                                        <span>Deskripsi</span>
-                                    </th>
-                                    
-                                    <th scope="col" class="px-4 py-2 border border-gray-300 dark:border-gray-700">
-                                        <span>Kategori</span>
-                                    </th>
-                                    
-                                    @if(Auth::user()->roles == "Admin" )
-                                    <th scope="col" class="px-6 py-3 text-center">
-                                        <span>Aksi</span>
-                                    </th>
-                                    @elseif(Auth::user()->roles == "Perekrut" )
-                                    <th scope="col" class="px-6 py-3 text-center">
-                                        <span>Aksi</span>
-                                    </th>
-                                    @endif
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($lowongan as $data)
-                                    <tr
-                                    class="bg-white dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700 text-black ">
-                                        <td scope="row"
-                                        class="px-4 py-2 border  border-gray-300 dark:border-gray-700 text-black text-center">
-                                            {{ ++$i }}
-                                        </td>
-                                        <td class="px-4 py-2 border border-gray-300 dark:border-gray-700 text-black text-left">
-                                            {{ $data->judul }}
-                                        </td>
-                                        <td class="px-4 py-2 border border-gray-300 dark:border-gray-700 text-black text-left">
-                                            {{ $data->deskripsi }}
-                                        </td>
-                                        <td class="px-4 py-2 border border-gray-300 text-black text-center dark:border-gray-700">
-                                            {{ $data->kategori }}
-                                        </td>
-                                        @if(Auth::user()->roles == "Admin")
-                                        <td class="px-4 py-2 border border-gray-300 text-black text-center dark:border-gray-700">
-                                           
-                                            <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('lowongan.destroy', $data->id) }}" method="POST">
-                                                <a href="{{ route('lowongan.edit', $data->id) }}"
-                                                    class="focus:outline-none text-gray-50 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-xs px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900">EDIT</a>
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                    class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-                                                    HAPUS</button>
-                                            </form>
-                                           
-                                        </td>
-                                        @elseif(Auth::user()->roles == "Perekrut")
-                                        <td class="px-4 py-2 border border-gray-300 text-black text-center dark:border-gray-700">
-                                            <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                            action="{{ route('lowongan.destroy', $data->id) }}" method="POST">
-                                            <a href="{{ route('lowongan.edit', $data->id) }}"
-                                                class="focus:outline-none text-gray-50 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-xs px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900">EDIT</a>
-                                            </form>
-                                        </td>
-                                        @endif
-                                    </tr>
-                                @empty
-                                    <div class="bg-gray-500 text-white p-3 rounded shadow-sm mb-3">
-                                        Data Belum Tersedia!
-                                    </div>
-                                @endforelse
-                            </tbody>
-                        </table>
-                        <div class="relative p-3">
-                        {{ $lowongan->links() }}
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if ($lowongans->count() > 0)
+                    @foreach ($lowongans as $index => $lowongan)
+                        <tr>
+                            <td scope="row"
+                                class="px-4 py-2 border border-gray-300 dark:border-gray-700 text-black text-center">
+                                {{ $loop->iteration }}
+                            </td>
+                            @if(Auth::user() && in_array(Auth::user()->roles, ['Admin','Pekerja' ]))
+                            <td class="border px-4 py-2">{{ $lowongan->user->name ?? 'Tidak Diketahui' }}</td>
+
+                        @endif
+                            <td class="border px-4 py-2">{{ $lowongan->judul }}</td>
+                            <td class="border px-4 py-2">{{ $lowongan->deskripsi }}</td>
+                            <td class="border px-4 py-2">{{ $lowongan->kategori }}</td>
+                            <td class="border px-4 py-2">{{ $lowongan->lokasi }}</td>
+                            <td class="border px-4 py-2">Rp{{ number_format($lowongan->gaji) }}</td>
+                            <td class="border px-4 py-2">{{ $lowongan->status }}</td>
+                
+                            @if (Auth::user() && in_array(Auth::user()->roles, ['Admin', 'Perekrut']))
+                                <td class="border px-4 py-2 flex space-x-2">
+                                    <a href="{{ route('lowongan.edit', $lowongan->id) }}" 
+                                       class="bg-yellow-500 text-white px-2 py-1 rounded flex items-center">
+                                        <i class="fas fa-edit mr-1"></i> Edit
+                                    </a>
+                                    <form action="{{ route('lowongan.destroy', $lowongan->id) }}" method="POST"
+                                          onsubmit="return confirmDelete(event)">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded flex items-center">
+                                            <i class="fas fa-trash mr-1"></i> Hapus
+                                        </button>
+                                    </form>
+                                </td>
+                            @endif
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="9" class="border text-center px-4 py-2">Tidak ada data lowongan</td>
+                    </tr>
+                @endif
+                
+                </tbody>
+            </table>
+            <script>
+                function confirmDelete(event) {
+                    if (!confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+                        event.preventDefault(); // Mencegah form dikirim jika user memilih "Batal"
+                        return false;
+                    }
+                    return true;
+                }
+            </script>
+            @if ($lowongans->hasPages())  
+                {{ $lowongans->links() }}
+            @endif
         </div>
     </div>
 </x-app-layout>
