@@ -19,7 +19,7 @@
                         <option value="">Pilih Lowongan</option>
                         @foreach ($lowongans as $lowongan)
                             @if ($lowongan->status !== 'Ditutup') <!-- Pastikan lowongan tidak ditutup -->
-                                <option value="{{ $lowongan->id }}">{{ $lowongan->judul }}</option>
+                                <option value="{{ $lowongan->id }}"> {{ $lowongan->user->name }} - {{ $lowongan->judul }} - {{ $lowongan->deskripsi }}</option>
                             @endif
                         @endforeach
                     </select>

@@ -9,19 +9,23 @@ class Manajemen extends Model
 {
     use HasFactory;
 
-    protected $table = 'manajemens';
-
     protected $fillable = [
-        'lowongan_id', 'pekerja_id', 'status'
+        'user_id', 'lowongan_id', 'jenis_kontrak',
+        'tanggal_mulai', 'tanggal_selesai', 'status', 'catatan'
     ];
 
-    public function lowongan()
+    public function users()
+{
+    return $this->belongsTo(User::class, 'user_id');
+}
+
+    public function pendaftarans()
     {
-        return $this->belongsTo(Lowongan::class);
+        return $this->hasMany(Pendaftaran::class, 'user_id');
     }
 
-    public function pekerja()
+    public function lowongans()
     {
-        return $this->belongsTo(User::class, 'pekerja_id');
+        return $this->belongsTo(Lowongan::class, 'lowongan_id');
     }
 }

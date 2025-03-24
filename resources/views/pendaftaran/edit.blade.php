@@ -13,7 +13,7 @@
                 
                 <input type="hidden" name="user_id" value="{{ $pendaftaran->user_id }}">
 
-                <div class="mb-4">
+                <div class="hidden mb-4">
                     <label class="block">Lowongan</label>
                     <select name="lowongan_id" class="w-full border px-2 py-1" required>
                         <option value="">Pilih Lowongan</option>
@@ -36,7 +36,18 @@
                     <input type="text" name="keahlian" class="w-full border px-2 py-1" value="{{ $pendaftaran->keahlian }}">
                 </div>
 
-                <input type="hidden" name="status" value="Menunggu">
+                <div class="mt-4 hidden">
+                    <x-input-label for="status" :value="__('Status Pendaftaran')" />
+                    <select id="status" name="status" 
+                        class="block mt-1 w-full border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 rounded-md shadow-sm focus:ring focus:ring-indigo-200"
+                        required>
+                        <option value="Menunggu" {{ old('status', $pendaftaran->status ?? '') == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
+                        <option value="Diterima" {{ old('status', $pendaftaran->status ?? '') == 'Diterima' ? 'selected' : '' }}>Diterima</option>
+                        <option value="Ditolak" {{ old('status', $pendaftaran->status ?? '') == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
+                    </select>
+                    <x-input-error :messages="$errors->get('status')" class="mt-2" />
+                </div>
+                
 
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2">Update</button>
             </form>

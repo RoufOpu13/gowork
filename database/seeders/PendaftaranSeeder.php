@@ -13,34 +13,43 @@ class PendaftaranSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('pendaftarans')->insert([
-            [
-                'user_id' => 7,
-                'lowongan_id' => 2,
-                'pengalaman' => '2 tahun sebagai tukang kayu',
-                'keahlian' => 'Pertukangan, Perakitan',
-                'status' => 'Menunggu',
+        $pendaftaranData = [];
+        $statuses = ['Menunggu'];
+        $pengalamanList = [
+            '1 tahun sebagai buruh pabrik',
+            '2 tahun sebagai teknisi',
+            '3 tahun sebagai tukang kayu',
+            '4 tahun sebagai mekanik',
+            '5 tahun sebagai mandor proyek',
+            '6 bulan sebagai asisten bangunan',
+            '1,5 tahun sebagai tukang cat',
+            '2,5 tahun sebagai tukang listrik',
+            '3,5 tahun sebagai pekerja harian'
+        ];
+        $keahlianList = [
+            'Pertukangan, Perakitan',
+            'Instalasi listrik, Pemeliharaan',
+            'Pengecatan, Pengukuran',
+            'Las listrik, Pemotongan besi',
+            'Pemeliharaan mesin, Perbaikan alat berat',
+            'Konstruksi bangunan, Pemasangan bata',
+            'Pengelasan, Pemipaan',
+            'Perawatan gedung, Renovasi ringan',
+            'Pengepakan barang, Bongkar muat'
+        ];
+
+        for ($i = 0; $i < 30; $i++) {
+            $pendaftaranData[] = [
+                'user_id' => rand(7, 14),
+                'lowongan_id' => rand(1, 15),
+                'pengalaman' => $pengalamanList[array_rand($pengalamanList)],
+                'keahlian' => $keahlianList[array_rand($keahlianList)],
+                'status' => $statuses[array_rand($statuses)],
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
-            [
-                'user_id' => 8,
-                'lowongan_id' => 3,
-                'pengalaman' => '3 tahun sebagai teknisi listrik',
-                'keahlian' => 'Instalasi listrik, Pemeliharaan',
-                'status' => 'Diterima',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'user_id' => 9,
-                'lowongan_id' => 1,
-                'pengalaman' => '1 tahun sebagai asisten bangunan',
-                'keahlian' => 'Pengecatan, Pengukuran',
-                'status' => 'Ditolak',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+            ];
+        }
+
+        DB::table('pendaftarans')->insert($pendaftaranData);
     }
 }

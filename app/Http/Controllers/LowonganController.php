@@ -22,10 +22,10 @@ class LowonganController extends Controller
         $user = Auth::user();
         if (in_array($user->roles, ['Admin', 'Pekerja'])) {
             // Admin dan Pekerja melihat semua lowongan
-            $lowongans = Lowongan::with('user')->paginate(10);
+            $lowongans = Lowongan::with('user')->paginate(5);
         } else {
             // Pengguna biasa hanya melihat lowongan yang dia buat sendiri
-            $lowongans = Lowongan::with('user')->where('user_id', $user->id)->paginate(10);
+            $lowongans = Lowongan::with('user')->where('user_id', $user->id)->paginate(5);
         }
         return view('lowongan.index', compact('lowongans'))
             ->with('i', (request()->input('page', 1) - 1) * 5);

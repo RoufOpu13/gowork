@@ -5,30 +5,28 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pendaftaran extends Model
+class Penggajian extends Model
 {
     use HasFactory;
-
-    protected $table = 'pendaftarans';
 
     protected $fillable = [
         'user_id',
         'lowongan_id',
-        'pengalaman',
-        'keahlian',
-        'status',
+        'gaji',
+        'tanggal_pembayaran',
+        'status'
     ];
 
+    // Relasi ke User (Pekerja)
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    
 
-    public function lowongan()
+    public function manajemen()
 {
-    return $this->belongsTo(Lowongan::class, 'lowongan_id');
+    return $this->belongsTo(Manajemen::class, 'manajemen_id');
 }
-
-
+    // Relasi ke Lowongan
+  
 }

@@ -14,56 +14,86 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'name' => 'Ini Admin',
+                'name' => 'Admin Utama',
                 'email' => 'admin@gmail.com',
                 'password' => bcrypt('123456789'),
                 'roles' => 'Admin'
             ],
             [
-                'name' => 'PT. Wing',
+                'name' => 'Agen Kuli Mandiri',
                 'email' => 'perekrut1@gmail.com',
                 'password' => bcrypt('123456789'),
                 'roles' => 'Perekrut'
             ],
             [
-                'name' => 'PT. Indofood',
+                'name' => 'Agen Kuli Sejahtera',
                 'email' => 'perekrut2@gmail.com',
                 'password' => bcrypt('123456789'),
                 'roles' => 'Perekrut'
             ],
             [
-                'name' => 'PT. Astra',
+                'name' => 'Agen Kuli Nusantara',
                 'email' => 'perekrut3@gmail.com',
                 'password' => bcrypt('123456789'),
                 'roles' => 'Perekrut'
             ],
             [
-                'name' => 'PT. Garuda Food',
+                'name' => 'Agen Kuli Berkah',
                 'email' => 'perekrut4@gmail.com',
                 'password' => bcrypt('123456789'),
                 'roles' => 'Perekrut'
             ],
             [
-                'name' => 'PT. Unilever',
+                'name' => 'Agen Kuli Jaya',
                 'email' => 'perekrut5@gmail.com',
                 'password' => bcrypt('123456789'),
                 'roles' => 'Perekrut'
             ],
             [
-                'name' => 'Pekerja 1',
-                'email' => 'pekerja1@gmail.com',
+                'name' => 'Budi Santoso',
+                'email' => 'budi.santoso@gmail.com',
                 'password' => bcrypt('123456789'),
                 'roles' => 'Pekerja'
             ],
             [
-                'name' => 'Pekerja 2',
-                'email' => 'pekerja2@gmail.com',
+                'name' => 'Siti Aminah',
+                'email' => 'siti.aminah@gmail.com',
                 'password' => bcrypt('123456789'),
                 'roles' => 'Pekerja'
             ],
             [
-                'name' => 'Pekerja 3',
-                'email' => 'pekerja3@gmail.com',
+                'name' => 'Andi Saputra',
+                'email' => 'andi.saputra@gmail.com',
+                'password' => bcrypt('123456789'),
+                'roles' => 'Pekerja'
+            ],
+            [
+                'name' => 'Dewi Lestari',
+                'email' => 'dewi.lestari@gmail.com',
+                'password' => bcrypt('123456789'),
+                'roles' => 'Pekerja'
+            ],
+            [
+                'name' => 'Rudi Hartono',
+                'email' => 'rudi.hartono@gmail.com',
+                'password' => bcrypt('123456789'),
+                'roles' => 'Pekerja'
+            ],
+            [
+                'name' => 'Lina Kurniawati',
+                'email' => 'lina.kurniawati@gmail.com',
+                'password' => bcrypt('123456789'),
+                'roles' => 'Pekerja'
+            ],
+            [
+                'name' => 'Tono Wijaya',
+                'email' => 'tono.wijaya@gmail.com',
+                'password' => bcrypt('123456789'),
+                'roles' => 'Pekerja'
+            ],
+            [
+                'name' => 'Rina Setiawan',
+                'email' => 'rina.setiawan@gmail.com',
                 'password' => bcrypt('123456789'),
                 'roles' => 'Pekerja'
             ],

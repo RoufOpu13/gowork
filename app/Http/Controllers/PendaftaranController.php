@@ -15,32 +15,52 @@ class PendaftaranController extends Controller
      */
     public function index()
     {
-        $pendaftaran = Pendaftaran::when(request()->search, function ($pendaftaran) {
-            $pendaftaran = $pendaftaran->where('name', 'like', '%' . request()->search . '%');
-        })->paginate(5);
-        $user = Auth::user();
-
+        $user = Auth::user(); // Ambil pengguna yang sedang login
+    
+        // Query dasar dengan relasi
+        $pendaftaran = Pendaftaran::with(['user', 'lowongan.user']);
+    
+        // Pencarian berdasarkan atribut tertentu
+        if (request()->has('search')) {
+            $search = request()->search;
+            $pendaftaran->where(function ($query) use ($search) {
+                $query->whereHas('user', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%') // Cari berdasarkan nama pekerja
+                      ->orWhere('id', $search); // Cari berdasarkan user_id
+                })->orWhereHas('lowongan', function ($q) use ($search) {
+                    $q->where('judul', 'like', '%' . $search . '%') // Cari berdasarkan nama lowongan
+                      ->orWhereHas('user', function ($q2) use ($search) {
+                          $q2->where('name', 'like', '%' . $search . '%'); // Cari berdasarkan nama perekrut
+                      });
+                })->orWhere('pengalaman', 'like', '%' . $search . '%') // Cari berdasarkan pengalaman
+                  ->orWhere('keahlian', 'like', '%' . $search . '%') // Cari berdasarkan keahlian
+                  ->orWhere('status', 'like', '%' . $search . '%'); // Cari berdasarkan status
+            });
+        }
+    
+        // Filter berdasarkan roles pengguna
         if ($user->roles == 'Admin') {
             // Admin melihat semua pendaftaran
-            $pendaftaran = Pendaftaran::with(['user', 'lowongan.user'])->paginate(10);
+            $pendaftaran = $pendaftaran->paginate(5);
         } elseif ($user->roles == 'Perekrut') {
             // Perekrut hanya melihat pendaftaran yang terkait dengan lowongan yang dibuatnya
-            $pendaftaran = Pendaftaran::with(['user', 'lowongan.user'])
+            $pendaftaran = $pendaftaran
                 ->whereHas('lowongan', function ($query) use ($user) {
                     $query->where('user_id', $user->id);
                 })
-                ->paginate(10);
+                ->paginate(5);
         } else {
             // Pekerja hanya melihat pendaftaran yang dia buat sendiri
-            $pendaftaran = Pendaftaran::with(['user', 'lowongan.user'])
+            $pendaftaran = $pendaftaran
                 ->where('user_id', $user->id)
-                ->paginate(10);
+                ->paginate(5);
         }
-
+    
         return view('pendaftaran.index', compact('pendaftaran'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
-
+    
+    
     /**
      * Show the form for creating a new resource.
      */
