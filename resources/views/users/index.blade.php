@@ -15,17 +15,23 @@
                                     class="w-full relative inline-flex items-center px-4 py-2 font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300" />
                             </form>
                         </div>
-                        @if(Auth::user()->roles == "Admin" )
-                        <div class="sm:ml-16 sm:mt-0 sm:flex-none">
-                            <a type="button" href="{{ route('users.create') }}"
-                                class="relative inline-flex items-center px-4 py-2 font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300">
-                                Add New
-                            </a>
-                        </div>
+                        @if (Auth::user()->roles == 'Admin')
+                            <div class="sm:ml-16 sm:mt-0 sm:flex-none">
+                                <a type="button" href="{{ route('users.create') }}"
+                                    class="relative inline-flex items-center px-4 py-2 font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300">
+                                    Add New
+                                </a>
+                                <a type="button" href="{{ route('users.export') }}"
+                                    class="relative inline-flex items-center px-4 py-2 font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300">
+                                    Export Excel
+                                </a>
+
+                            </div>
                         @endif
                     </div>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border border-gray-300 dark:border-gray-700">
+                        <table
+                            class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border border-gray-300 dark:border-gray-700">
                             <thead class="bg-gray-100 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700">
                                 <tr
                                     class="bg-white text-gray-500 hover:text-black text-center border-t border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -38,16 +44,16 @@
                                     <th scope="col" class="px-4 py-2 border border-gray-300 dark:border-gray-700">
                                         <span>Email</span>
                                     </th>
-                                    
+
                                     <th scope="col" class="px-4 py-2 border border-gray-300 dark:border-gray-700">
                                         <span>Role</span>
                                     </th>
-                                    
-                                    @if(Auth::user()->roles == "Admin" )
-                                    <th scope="col" class="px-6 py-3 text-center">
-                                        <span>Aksi</span>
-                                    </th>
-                                    {{-- @elseif(Auth::user()->roles == "Perekrut" )
+
+                                    @if (Auth::user()->roles == 'Admin')
+                                        <th scope="col" class="px-6 py-3 text-center">
+                                            <span>Aksi</span>
+                                        </th>
+                                        {{-- @elseif(Auth::user()->roles == "Perekrut" )
                                     <th scope="col" class="px-6 py-3 text-center">
                                         <span>Aksi</span>
                                     </th> --}}
@@ -57,36 +63,40 @@
                             <tbody>
                                 @forelse($users as $user)
                                     <tr
-                                    class="bg-white dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700 text-black ">
+                                        class="bg-white dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700 text-black ">
                                         <td scope="row"
-                                        class="px-4 py-2 border  border-gray-300 dark:border-gray-700 text-black text-center">
+                                            class="px-4 py-2 border  border-gray-300 dark:border-gray-700 text-black text-center">
                                             {{ ++$i }}
                                         </td>
-                                        <td class="px-4 py-2 border border-gray-300 dark:border-gray-700 text-black text-left">
+                                        <td
+                                            class="px-4 py-2 border border-gray-300 dark:border-gray-700 text-black text-left">
                                             {{ $user->name }}
                                         </td>
-                                        <td class="px-4 py-2 border border-gray-300 dark:border-gray-700 text-black text-left">
+                                        <td
+                                            class="px-4 py-2 border border-gray-300 dark:border-gray-700 text-black text-left">
                                             {{ $user->email }}
                                         </td>
-                                        <td class="px-4 py-2 border border-gray-300 text-black text-center dark:border-gray-700">
+                                        <td
+                                            class="px-4 py-2 border border-gray-300 text-black text-center dark:border-gray-700">
                                             {{ $user->roles }}
                                         </td>
-                                        @if(Auth::user()->roles == "Admin")
-                                        <td class="px-4 py-2 border border-gray-300 text-black text-center dark:border-gray-700">
-                                           
-                                            <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('users.destroy', $user->id) }}" method="POST">
-                                                <a href="{{ route('users.edit', $user->id) }}"
-                                                    class="focus:outline-none text-gray-50 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-xs px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900">EDIT</a>
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                    class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-                                                    HAPUS</button>
-                                            </form>
-                                           
-                                        </td>
-                                        {{-- @elseif(Auth::user()->roles == "Perekrut")
+                                        @if (Auth::user()->roles == 'Admin')
+                                            <td
+                                                class="px-4 py-2 border border-gray-300 text-black text-center dark:border-gray-700">
+
+                                                <form onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                                    action="{{ route('users.destroy', $user->id) }}" method="POST">
+                                                    <a href="{{ route('users.edit', $user->id) }}"
+                                                        class="focus:outline-none text-gray-50 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-xs px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900">EDIT</a>
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                                                        HAPUS</button>
+                                                </form>
+
+                                            </td>
+                                            {{-- @elseif(Auth::user()->roles == "Perekrut")
                                         <td class="px-4 py-2 border border-gray-300 text-black text-center dark:border-gray-700">
                                             <form onsubmit="return confirm('Apakah Anda Yakin ?');"
                                             action="{{ route('users.destroy', $user->id) }}" method="POST">
@@ -104,7 +114,7 @@
                             </tbody>
                         </table>
                         <div class="relative p-3">
-                        {{ $users->links() }}
+                            {{ $users->links() }}
                         </div>
                     </div>
                 </div>

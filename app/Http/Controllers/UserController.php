@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsersExport;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
+
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
     /**
      * Display a listing of the resource.
      */
