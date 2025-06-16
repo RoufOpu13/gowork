@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -39,16 +40,23 @@ class PendaftaranSeeder extends Seeder
         ];
 
         for ($i = 0; $i < 30; $i++) {
+            // Membuat tanggal acak antara 1 Januari 2024 sampai hari ini
+            $startDate = Carbon::create(2024, 1, 1);
+            $endDate = Carbon::now();
+            $randomDate = Carbon::createFromTimestamp(rand($startDate->timestamp, $endDate->timestamp));
+
             $pendaftaranData[] = [
                 'user_id' => rand(7, 14),
                 'lowongan_id' => rand(1, 15),
                 'pengalaman' => $pengalamanList[array_rand($pengalamanList)],
                 'keahlian' => $keahlianList[array_rand($keahlianList)],
                 'status' => $statuses[array_rand($statuses)],
-                'created_at' => now(),
-                'updated_at' => now(),
+                'tanggal_pendaftaran' => $randomDate->toDateString(), // Format: YYYY-MM-DD
+                'created_at' => $randomDate,
+                'updated_at' => $randomDate,
             ];
         }
+
 
         DB::table('pendaftarans')->insert($pendaftaranData);
     }

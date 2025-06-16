@@ -13,13 +13,15 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('lowongan_id')->constrained('lowongans')->onDelete('cascade');
             
-            $table->text('pengalaman')->nullable(); // Menyimpan pengalaman kerja pekerja
-            $table->text('keahlian')->nullable(); // Menyimpan keterampilan pekerja
-        
+            $table->text('pengalaman')->nullable();
+            $table->text('keahlian')->nullable();
+            
             $table->enum('status', ['Menunggu', 'Diterima', 'Ditolak'])->default('Menunggu');
+
+            $table->date('tanggal_pendaftaran')->nullable(); // <- Ditambahkan di sini
+
             $table->timestamps();
         });
-        
     }
 
     public function down()
